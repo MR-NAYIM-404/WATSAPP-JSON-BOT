@@ -26,7 +26,7 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./sessions`)
     const XeonBotInc = makeWASocket({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: !pairingCode, // popping up QR in terminal log
-      browser: Browsers.windows('Firefox'), // for this issues https://github.com/WhiskeySockets/Baileys/issues/328
+      browser: Browsers.windows('Firefox'), 
      auth: {
          creds: state.creds,
          keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
@@ -39,13 +39,12 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./sessions`)
 
          return msg?.message || ""
       },
-      msgRetryCounterCache, // Resolve waiting messages
-      defaultQueryTimeoutMs: undefined, // for this issues https://github.com/WhiskeySockets/Baileys/issues/276
+      msgRetryCounterCache, 
+      defaultQueryTimeoutMs: undefined, 
    })
 
 
-    // login use pairing code
-   // source code https://github.com/WhiskeySockets/Baileys/blob/master/Example/example.ts#L61
+    
    if (pairingCode && !XeonBotInc.authState.creds.registered) {
       if (useMobile) throw new Error('Cannot use pairing code with mobile api')
 
@@ -61,7 +60,7 @@ const {  state, saveCreds } =await useMultiFileAuthState(`./sessions`)
          phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`This bot CREATE by MD NAJMUL HOQUE NAYIM\nPlease type your WhatsApp number 😍\nFor example: +8801977073308 : `)))
          phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
 
-         // Ask again when entering the wrong number
+         
          if (!Object.keys(PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
             console.log(chalk.bgBlack(chalk.redBright("Start with country code of your WhatsApp Number, Example : +8801977073308")))
 
@@ -143,4 +142,3 @@ if (e.includes("Timed Out")) return
 if (e.includes("Value not found")) return
 console.log('Caught exception: ', err)
 })
-
